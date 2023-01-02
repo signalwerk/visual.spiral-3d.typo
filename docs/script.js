@@ -27,6 +27,9 @@ const heightStep = 0.5;
 
 const heightOffset = (heightStep * (turns * objectsPerTurn)) / 2;
 
+// Calculate the slope of the spiral
+const slope = (objectsPerTurn * heightStep) / radius / (Math.PI * 2);
+
 const fontSize = 2;
 
 manager.onLoad = function () {
@@ -96,11 +99,12 @@ function init() {
   controls.target.set(0, 0, 0);
   controls.update();
 
+  // This code adds a grid to the scene if the beta flag is true.
   if (beta) {
     scene.add(new THREE.GridHelper(20, 10));
   }
 
-  const texts = getTextGeometries("Happy new year Max! ");
+  const texts = getTextGeometries("Happy new year! ");
 
   const degrees90 = Math.PI / 2;
 
@@ -130,7 +134,8 @@ function init() {
 
     // rotation
     letter.rotation.y = 0 - angleStep * i + degrees90;
-    letter.rotation.z = 0.19; // random guessing....
+
+    letter.rotation.z = slope;
 
     spiral.add(letter);
   }
